@@ -1,5 +1,5 @@
 <?php
-// register.php - Clean & Attractive Registration
+// register.php 
 session_start();
 include "db.php";
 
@@ -60,7 +60,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -75,31 +79,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     </div>
 
     <?php if ($message != ""): ?>
-        <div class="alert alert-<?php echo $message_type; ?>">
-            <i class="fas <?php echo $message_type == 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'; ?>"></i>
+        <div class="alert alert-<?php echo $message_type == 'success' ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert">
+            <i class="fas <?php echo $message_type == 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'; ?> me-2"></i>
             <span><?php echo $message; ?></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
 
     <form method="POST">
         <div class="input-group">
             <i class="fas fa-user"></i>
-            <input type="text" name="fullname" placeholder="Full Name" required value="<?php echo isset($_POST['fullname']) ? htmlspecialchars($_POST['fullname']) : ''; ?>">
+            <input type="text" name="fullname" class="form-control" placeholder="Full Name" required value="<?php echo isset($_POST['fullname']) ? htmlspecialchars($_POST['fullname']) : ''; ?>">
         </div>
 
         <div class="input-group">
             <i class="fas fa-envelope"></i>
-            <input type="email" name="email" placeholder="Email Address" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+            <input type="email" name="email" class="form-control" placeholder="Email Address" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
         </div>
 
         <div class="input-group">
             <i class="fas fa-lock"></i>
-            <input type="password" name="password" placeholder="Password (min 4 chars)" required>
+            <input type="password" name="password" class="form-control" placeholder="Password (min 4 chars)" required>
         </div>
 
         <div class="input-group">
             <i class="fas fa-check-circle"></i>
-            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
         </div>
 
         <button type="submit" name="register" class="btn-register">
@@ -113,5 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["register"])) {
     </div>
 </div>
 
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

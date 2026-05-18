@@ -1,5 +1,5 @@
 <?php
-// home.php - Dashboard with Profile Settings
+// home.php 
 session_start();
 
 if (!isset($_SESSION["user"])) {
@@ -89,7 +89,11 @@ $stmt->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -101,11 +105,12 @@ $stmt->close();
     </a>
 </nav>
 
-<div class="home-container">
+<div class="container home-container">
     <?php if ($message != ""): ?>
-        <div class="alert alert-<?php echo $message_type; ?>">
-            <i class="fas <?php echo $message_type == 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'; ?>"></i>
+        <div class="alert alert-<?php echo $message_type == 'success' ? 'success' : 'danger'; ?> alert-dismissible fade show" role="alert">
+            <i class="fas <?php echo $message_type == 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'; ?> me-2"></i>
             <span><?php echo $message; ?></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
 
@@ -129,39 +134,45 @@ $stmt->close();
             <h3>Profile Settings</h3>
         </div>
         
-        <div class="profile-grid">
+        <div class="row g-4">
             <!-- Update Name Card -->
-            <div class="profile-card">
-                <div class="profile-icon">
-                    <i class="fas fa-user-edit"></i>
+            <div class="col-md-6">
+                <div class="profile-card">
+                    <div class="profile-icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <h4>Update Name</h4>
+                    <form method="POST" class="profile-form">
+                        <input type="text" name="fullname" class="form-control" placeholder="New Full Name" value="<?php echo htmlspecialchars($user_data['fullname']); ?>" required>
+                        <button type="submit" name="update_name" class="btn-update">
+                            <i class="fas fa-save"></i> Update Name
+                        </button>
+                    </form>
                 </div>
-                <h4>Update Name</h4>
-                <form method="POST" class="profile-form">
-                    <input type="text" name="fullname" placeholder="New Full Name" value="<?php echo htmlspecialchars($user_data['fullname']); ?>" required>
-                    <button type="submit" name="update_name" class="btn-update">
-                        <i class="fas fa-save"></i> Update Name
-                    </button>
-                </form>
             </div>
 
             <!-- Change Password Card -->
-            <div class="profile-card">
-                <div class="profile-icon">
-                    <i class="fas fa-key"></i>
+            <div class="col-md-6">
+                <div class="profile-card">
+                    <div class="profile-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h4>Change Password</h4>
+                    <form method="POST" class="profile-form">
+                        <input type="password" name="current_password" class="form-control" placeholder="Current Password" required>
+                        <input type="password" name="new_password" class="form-control" placeholder="New Password (min 4 chars)" required>
+                        <input type="password" name="confirm_password" class="form-control" placeholder="Confirm New Password" required>
+                        <button type="submit" name="change_password" class="btn-update">
+                            <i class="fas fa-lock"></i> Change Password
+                        </button>
+                    </form>
                 </div>
-                <h4>Change Password</h4>
-                <form method="POST" class="profile-form">
-                    <input type="password" name="current_password" placeholder="Current Password" required>
-                    <input type="password" name="new_password" placeholder="New Password (min 4 chars)" required>
-                    <input type="password" name="confirm_password" placeholder="Confirm New Password" required>
-                    <button type="submit" name="change_password" class="btn-update">
-                        <i class="fas fa-lock"></i> Change Password
-                    </button>
-                </form>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Bootstrap 5 JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
